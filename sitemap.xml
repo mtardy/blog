@@ -2,12 +2,12 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://mtardy.github.io/blog/archives/</loc>
+    <loc>https://mtardy.com/archives/</loc>
   </url><url>
-    <loc>https://mtardy.github.io/blog/categories/</loc>
+    <loc>https://mtardy.com/categories/</loc>
   </url><url>
-    <loc>https://mtardy.github.io/blog/</loc>
+    <loc>https://mtardy.com/</loc>
   </url><url>
-    <loc>https://mtardy.github.io/blog/tags/</loc>
+    <loc>https://mtardy.com/tags/</loc>
   </url>
 </urlset>
