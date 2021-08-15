@@ -1,4 +1,4 @@
-baseURL: "https://mtardy.com/"
+baseURL: "https://mtardy.github.io/blog/"
 title: mtardy
 paginate: 5
 theme: PaperMod
