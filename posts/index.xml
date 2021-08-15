@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>mtardy</title>
-    <link>https://mtardy.com/</link>
-    <description>Recent content on mtardy</description>
+    <title>Posts on mtardy</title>
+    <link>https://mtardy.com/posts/</link>
+    <description>Recent content in Posts on mtardy</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 30 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://mtardy.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 30 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://mtardy.com/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Summer Internship: Reflexive Programming Language Framework</title>
       <link>https://mtardy.com/posts/internship-reflexive-language/</link>
@@ -14,7 +14,6 @@
       <guid>https://mtardy.com/posts/internship-reflexive-language/</guid>
       <description>This write-up is the extended abstract of my 2020 summer internship. It was a reflexivity-based programming language project written in C.</description>
     </item>
-    
     
   </channel>
 </rss>

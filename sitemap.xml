@@ -2,12 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://mtardy.com/archives/</loc>
+    <loc>https://mtardy.com/tags/c/</loc>
+    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://mtardy.com/categories/</loc>
+    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://mtardy.com/</loc>
+    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mtardy.com/posts/</loc>
+    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mtardy.com/categories/programming-language/</loc>
+    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mtardy.com/tags/reflexivity/</loc>
+    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mtardy.com/posts/internship-reflexive-language/</loc>
+    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://mtardy.com/tags/</loc>
+    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mtardy.com/archives/</loc>
   </url>
 </urlset>
