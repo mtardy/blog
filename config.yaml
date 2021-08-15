@@ -113,10 +113,11 @@ params:
 
     homeInfoParams:
         Title: "Hi!"
-        Content: >
+        Content: |
             I'm Mahé, a student doing his final year internship in cybersecurity at Quarkslab.
-             
-            - I'm currently doing research on Kubernetes security but I've also been doing devops on top of my studies at a fintech startup named Flowdesk for a couple of years.
+            \
+            \
+            I'm currently doing research on Kubernetes security but I've also been doing devops on top of my studies at a fintech startup named Flowdesk for a couple of years.
     socialIcons:
         - name: github
           url: "https://github.com/mtardy"
