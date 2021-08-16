@@ -5,13 +5,22 @@
     <link>https://mtardy.com/</link>
     <description>Recent content on mtardy</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 30 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://mtardy.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 14 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://mtardy.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Arbitrary code injection in Super Mario Bros 3</title>
+      <link>https://mtardy.com/posts/mario-injection/</link>
+      <pubDate>Sun, 14 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://mtardy.com/posts/mario-injection/</guid>
+      <description>This write-up is the extended abstract of my final year long-project. It was an exploration about arbitrary code injection in video games.</description>
+    </item>
+    
     <item>
       <title>Summer Internship: Reflexive Programming Language Framework</title>
-      <link>https://mtardy.com/posts/internship-reflexive-language/</link>
+      <link>https://mtardy.com/posts/reflexive-language/</link>
       <pubDate>Mon, 30 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://mtardy.com/posts/internship-reflexive-language/</guid>
+      <guid>https://mtardy.com/posts/reflexive-language/</guid>
       <description>This write-up is the extended abstract of my 2020 summer internship. It was a reflexivity-based programming language project written in C.</description>
     </item>
     
