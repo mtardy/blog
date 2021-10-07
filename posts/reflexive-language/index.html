@@ -17,7 +17,7 @@
 <link rel=mask-icon href=https://mtardy.com/safari-pinned-tab.svg>
 <meta name=theme-color content="#2e2e33">
 <meta name=msapplication-TileColor content="#2e2e33">
-<meta name=generator content="Hugo 0.87.0">
+<meta name=generator content="Hugo 0.88.1">
 <meta property="og:title" content="Summer Internship: Reflexive Programming Language Framework">
 <meta property="og:description" content="This write-up is the extended abstract of my 2020 summer internship. It was a reflexivity-based programming language project written in C.">
 <meta property="og:type" content="article">
@@ -236,7 +236,7 @@ with a non-evaluated arguments function. On the first line, between parenthesis
 are the arguments of the syntax, following is the keyword for the body. The
 backtick <code>(stmt)</code> is here to declare a statement in which there can be AST
 nodes to evaluate, signaled by <code>@</code>.</p>
-<pre><code>syntax until (c) b {
+<pre tabindex=0><code>syntax until (c) b {
     return `(while (!@c) @b)
 }
 
@@ -247,7 +247,7 @@ until (x==10) {
 // will print 0 to 9
 </code></pre><p>Here is another example, a bit more complexe, of what can be achieved with
 <code>syntax</code>.</p>
-<pre><code>syntax foreach (variable, map) block {
+<pre tabindex=0><code>syntax foreach (variable, map) block {
     `({
         var _map= values(@map);
         var _len= length(_map);
@@ -270,7 +270,7 @@ order to speed up search and insertion.</p>
 in JavaScript to create a common behaviour between two objects. What is
 interesting is that you can implement your own "new" constructor mechanism to
 create objects.</p>
-<pre><code>var Object = { __name__: #&quot;Object&quot; };
+<pre tabindex=0><code>var Object = { __name__: #&quot;Object&quot; };
 Object.init = fun () { this; }
 Object.new = fun () {
     var obj= { __proto__ : this };
