@@ -114,17 +114,20 @@ params:
     homeInfoParams:
         Title: "Hi!"
         Content: |
-            I'm Mahé, a student doing his final year internship in cybersecurity at Quarkslab.
+            I'm Mahé, a junior security researcher working mostly on Kubernetes
+            security at Quarkslab.
             \
             \
-            I'm currently doing research on Kubernetes security but I've also been doing devops on top of my studies at a fintech startup named Flowdesk for a couple of years.
+            I just finished my studies and also I'm an ex part-time devops at a
+            fintech startup named Flowdesk. I hope you'll find some interesting
+            content here.
     socialIcons:
         - name: github
           url: "https://github.com/mtardy"
+        - name: twitter
+          url: "https://twitter.com/mahe_tardy"
         - name: linkedin
           url: "https://linkedin.com/in/mtardy"
-        - name: email
-          url: "mailto:mahe.tardy@gmail.com"
         - name: RsS
           url: "index.xml"
 
