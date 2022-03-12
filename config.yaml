@@ -114,13 +114,12 @@ params:
     homeInfoParams:
         Title: "Hi!"
         Content: |
-            I'm Mahé, a junior security researcher working mostly on Kubernetes
-            security at Quarkslab.
+            I'm Mahé, a R&D security engineer working mostly on Kubernetes
+            security and also doing a bit of blockchain audits at Quarkslab.
             \
             \
-            I just finished my studies and also I'm an ex part-time devops at a
-            fintech startup named Flowdesk. I hope you'll find some interesting
-            content here.
+            I'm also an ex part-time devops at a fintech startup named Flowdesk. I
+            hope you'll find some interesting content here!
     socialIcons:
         - name: github
           url: "https://github.com/mtardy"
