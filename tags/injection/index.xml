@@ -8,10 +8,10 @@
     <lastBuildDate>Sun, 14 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://mtardy.com/tags/injection/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Arbitrary code injection in Super Mario Bros 3</title>
-      <link>https://mtardy.com/mario-injection/</link>
+      <link>https://mtardy.com/posts/mario-injection/</link>
       <pubDate>Sun, 14 Mar 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://mtardy.com/mario-injection/</guid>
+      <guid>https://mtardy.com/posts/mario-injection/</guid>
       <description>This write-up is the extended abstract of my final year long-project. It was an exploration about arbitrary code injection in video games.</description>
     </item>
     

@@ -8,10 +8,10 @@
     <lastBuildDate>Mon, 30 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://mtardy.com/tags/c/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Summer Internship: Reflexive Programming Language Framework</title>
-      <link>https://mtardy.com/reflexive-language/</link>
+      <link>https://mtardy.com/posts/reflexive-language/</link>
       <pubDate>Mon, 30 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://mtardy.com/reflexive-language/</guid>
+      <guid>https://mtardy.com/posts/reflexive-language/</guid>
       <description>This write-up is the extended abstract of my 2020 summer internship. It was a reflexivity-based programming language project written in C.</description>
     </item>
     

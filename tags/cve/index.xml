@@ -8,10 +8,10 @@
     <lastBuildDate>Thu, 03 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mtardy.com/tags/cve/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Kubernetes and HostPath, a Love-Hate Relationship</title>
-      <link>https://mtardy.com/k8s-hostpath/</link>
+      <link>https://mtardy.com/posts/k8s-hostpath/</link>
       <pubDate>Thu, 03 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://mtardy.com/k8s-hostpath/</guid>
+      <guid>https://mtardy.com/posts/k8s-hostpath/</guid>
       <description>The article is available on Quarkslab&amp;rsquo;s blog.
 It traces the history of three Kubernetes-related vulnerabilities. Explaining what they are, how they were patched, and how they are related. The exploitation of these vulnerabilities allowed access to the underlying host filesystem for users that were not properly authorized.</description>
     </item>
