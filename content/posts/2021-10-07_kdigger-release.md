@@ -4,7 +4,7 @@ date: "2021-10-07"
 description: ""
 tags: ["Go", "kubernetes", "security"]
 categories: ["kubernetes"]
-url: "kdigger-release"
+url: "posts/kdigger-release"
 canonicalURL: "https://blog.quarkslab.com/kdigger-a-context-discovery-tool-for-kubernetes.html"
 ShowCanonicalLink: true
 ---
