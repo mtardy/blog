@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Go on mtardy</title>
+    <link>https://mtardy.com/tags/go/</link>
+    <description>Recent content in Go on mtardy</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 07 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://mtardy.com/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>kdigger: a Context Discovery Tool for Kubernetes</title>
+      <link>https://mtardy.com/kdigger-release/</link>
+      <pubDate>Thu, 07 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://mtardy.com/kdigger-release/</guid>
+      <description>The article is available on Quarkslab&amp;rsquo;s blog.
+It&amp;rsquo;s an introduction to Kubernetes security through the release of a new context discovery tool, kdigger, and its mini CTF companion, minik8s-ctf.</description>
+    </item>
+    
+  </channel>
+</rss>

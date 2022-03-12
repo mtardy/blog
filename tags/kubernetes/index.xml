@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>kubernetes on mtardy</title>
+    <link>https://mtardy.com/tags/kubernetes/</link>
+    <description>Recent content in kubernetes on mtardy</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 03 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mtardy.com/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kubernetes and HostPath, a Love-Hate Relationship</title>
+      <link>https://mtardy.com/k8s-hostpath/</link>
+      <pubDate>Thu, 03 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mtardy.com/k8s-hostpath/</guid>
+      <description>The article is available on Quarkslab&amp;rsquo;s blog.
+It traces the history of three Kubernetes-related vulnerabilities. Explaining what they are, how they were patched, and how they are related. The exploitation of these vulnerabilities allowed access to the underlying host filesystem for users that were not properly authorized.</description>
+    </item>
+    
+    <item>
+      <title>kdigger: a Context Discovery Tool for Kubernetes</title>
+      <link>https://mtardy.com/kdigger-release/</link>
+      <pubDate>Thu, 07 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://mtardy.com/kdigger-release/</guid>
+      <description>The article is available on Quarkslab&amp;rsquo;s blog.
+It&amp;rsquo;s an introduction to Kubernetes security through the release of a new context discovery tool, kdigger, and its mini CTF companion, minik8s-ctf.</description>
+    </item>
+    
+  </channel>
+</rss>
