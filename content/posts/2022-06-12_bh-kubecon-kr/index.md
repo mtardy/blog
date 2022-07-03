@@ -315,7 +315,7 @@ it was nice to learn from the person that mostly handled the case.
     link=https://kernel-recipes.org/en/2022/trust-and-the-linux-kernel-development-model
     target=_blank
     alt="drawing of Greg KH presenting"
-    height=300px
+    width=420px
     caption="Greg KH by Frank Tizzoni"
     class=align-center
 >}}
