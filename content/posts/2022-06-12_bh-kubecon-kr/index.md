@@ -155,7 +155,7 @@ SIG docs.
 {{<
     figure src=./contributor.jpg#center
     alt="KubeCon Europe 2022 Contributor Summit"
-    height=400px
+    width=80%
     caption="Contributor Summit in the Convention Center of the Feria, CNCF Photographer, CC BY-NC 2.0"
     class=align-center
 >}}
