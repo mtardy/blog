@@ -1,6 +1,6 @@
 ---
 title: "Black Hat, KubeCon and Kernel Recipes"
-date: "2022-06-12"
+date: "2022-07-04"
 description: "Having joined the IT world in covid times, these events were my
 first in-person international conferences!"
 tags: ["open-source", "kubernetes", "security", "linux"]
