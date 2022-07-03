@@ -5,16 +5,7 @@
     <link>https://mtardy.com/tags/kubernetes/</link>
     <description>Recent content in kubernetes on mtardy</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sun, 12 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mtardy.com/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Black Hat, KubeCon and Kernel Recipes</title>
-      <link>https://mtardy.com/post/blackhat-kubecon-kernelrecipes/</link>
-      <pubDate>Sun, 12 Jun 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://mtardy.com/post/blackhat-kubecon-kernelrecipes/</guid>
-      <description>Having joined the IT world in covid times, these events were my first in-person international conferences!</description>
-    </item>
-    
+    <lastBuildDate>Thu, 03 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mtardy.com/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Kubernetes and HostPath, a Love-Hate Relationship</title>
       <link>https://mtardy.com/posts/k8s-hostpath/</link>
