@@ -8,6 +8,7 @@ categories: ["conferences"]
 url: "post/blackhat-kubecon-kernelrecipes"
 cover:
     image: bhasia.jpg
+    relative: true
     alt: "Myself presenting the tool kdigger at Black Hat Asia Arsenal 2022"
 ---
 
