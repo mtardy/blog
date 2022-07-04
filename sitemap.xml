@@ -2,31 +2,43 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://mtardy.com/categories/</loc>
-    <lastmod>2022-03-03T00:00:00+00:00</lastmod>
+    <loc>https://mtardy.com/post/blackhat-kubecon-kernelrecipes/</loc>
+    <lastmod>2022-07-04T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://mtardy.com/tags/cve/</loc>
-    <lastmod>2022-03-03T00:00:00+00:00</lastmod>
+    <loc>https://mtardy.com/categories/</loc>
+    <lastmod>2022-07-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mtardy.com/categories/conferences/</loc>
+    <lastmod>2022-07-04T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://mtardy.com/tags/kubernetes/</loc>
+    <lastmod>2022-07-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mtardy.com/tags/linux/</loc>
+    <lastmod>2022-07-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mtardy.com/</loc>
+    <lastmod>2022-07-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mtardy.com/tags/open-source/</loc>
+    <lastmod>2022-07-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mtardy.com/posts/</loc>
+    <lastmod>2022-07-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mtardy.com/tags/security/</loc>
+    <lastmod>2022-07-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mtardy.com/tags/</loc>
+    <lastmod>2022-07-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mtardy.com/tags/cve/</loc>
     <lastmod>2022-03-03T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://mtardy.com/categories/kubernetes/</loc>
     <lastmod>2022-03-03T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://mtardy.com/posts/k8s-hostpath/</loc>
-    <lastmod>2022-03-03T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://mtardy.com/</loc>
-    <lastmod>2022-03-03T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://mtardy.com/posts/</loc>
-    <lastmod>2022-03-03T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://mtardy.com/tags/security/</loc>
-    <lastmod>2022-03-03T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://mtardy.com/tags/</loc>
     <lastmod>2022-03-03T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://mtardy.com/tags/go/</loc>
