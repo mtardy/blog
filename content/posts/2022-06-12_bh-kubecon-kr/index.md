@@ -377,10 +377,10 @@ presentations!
 
 ## Conclusion on these adventures
 
-I had a lot of luck going to these various events that made me discover the
-reality of these very different communities. The link between all these
-experiences was open-source and it motivated me to spend more time contributing
-to projects. Meeting some of the Kubernetes people was also really cool.
+I was very lucky to participate in these different events that made me discover
+the reality of these very different communities. The link between all these
+experiences was open source and it motivated me to spend more time contributing
+to projects. Meeting some of the Kubernetes people was also very cool.
 
 I was overall impressed with the presentation skills of some speakers and I
 will try to take inspiration from them for my future presentations. On that
