@@ -12,7 +12,7 @@ cover:
 ---
 
 During the last three months, I had the opportunity to go to multiple events.
-First, a proposal I submitted for Black Hat Asia Arsenal was accepted to
+First, a proposal I submitted to Black Hat Asia Arsenal was accepted to
 present [*kdigger*](https://github.com/quarkslab/kdigger), a Kubernetes
 security tool. Then I had the chance to go to the KubeCon Europe to meet the
 people with whom I interacted in the project. And finally, I got the last few
@@ -277,7 +277,7 @@ architectural style.
 ### Presentations
 
 All talks were recorded and are available on Youtube, most of them aren't
-available as extracts yet, but the whole livestream of
+available as extracts yet, but the whole livestreams of
 [day 1](https://www.youtube.com/watch?v=v--rVT4RsCE),
 [day 2](https://www.youtube.com/watch?v=nhJqaZT94z0),
 and [day 3](https://www.youtube.com/watch?v=ELPENQrtUas)
@@ -323,7 +323,7 @@ it was nice to learn from the person that mostly handled the case.
 #### Once upon an API - Michael Kerrisk
 
 A presenter could not attend and we had the chance to have Michael Kerrisk that
-was ready to present a fantastic story about Linux interfaces. It detailed how
+was ready to present a fantastic story about Linux interfaces. He detailed how
 `prctl(2)` interface is inconsistent and how it led to a complete mess.
 
 {{<
@@ -367,7 +367,7 @@ to merge large chunks into the kernel and become trusted in the Linux community.
 I loved this event, it was completely different from what I experienced with
 Black Hat or the KubeCon. It was like discovering an established universe, and
 I saw a lot of well-known persons in the ecosystem, from whom I read the book
-or already knew. On top of that, I was super happy to meet some people working
+or just knew the name. On top of that, I was super happy to meet some people working
 at Isovalent and was accidentally drawn with them watching the last
 presentations!
 
