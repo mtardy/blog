@@ -114,11 +114,12 @@ params:
     homeInfoParams:
         Title: "Hi!"
         Content: |
-            I'm Mahé, a R&D security engineer working mostly on Kubernetes
-            security and also doing a bit of blockchain audits at Quarkslab.
+            I'm Mahé, an R&D security engineer at Quarkslab working on Kubernetes
+            security and vulnerability research. Learning static and dynamic analysis. 
+            I love to fuzz and crash C/C++ programs.
             \
             \
-            I'm also an ex part-time devops at a fintech startup named Flowdesk. I
+            I'm also an ex-part-time DevOps at a fintech startup named Flowdesk. I
             hope you'll find some interesting content here!
     socialIcons:
         - name: github
