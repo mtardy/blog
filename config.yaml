@@ -126,6 +126,8 @@ params:
           url: "https://github.com/mtardy"
         - name: twitter
           url: "https://twitter.com/mtardy_"
+        - name: mastodon
+          url: "https://infosec.exchange/@mtardy"
         - name: linkedin
           url: "https://linkedin.com/in/mtardy"
         - name: RsS
