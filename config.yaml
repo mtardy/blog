@@ -114,13 +114,13 @@ params:
     homeInfoParams:
         Title: "Hi!"
         Content: |
-            I'm Mahé, an R&D security engineer at Quarkslab working on Kubernetes
-            security and vulnerability research. Learning static and dynamic analysis. 
-            I love to fuzz and crash C/C++ programs.
+            I'm Mahé, a Security Engineer working at Isovalent.
             \
             \
-            I'm also an ex-part-time DevOps at a fintech startup named Flowdesk. I
-            hope you'll find some interesting content here!
+            I was previously an R&D security engineer at Quarkslab working on
+            Kubernetes security and vulnerability research, doing a bit of
+            fuzzing. Before that I also worked at Flowdesk, a fintech startup,
+            as a devops. I hope you'll find some interesting content here!
     socialIcons:
         - name: github
           url: "https://github.com/mtardy"
