@@ -1,6 +1,6 @@
 baseURL: "https://mtardy.com"
 title: mtardy
-paginate: 5
+paginate: 10
 theme: PaperMod
 
 enableInlineShortcodes: true
