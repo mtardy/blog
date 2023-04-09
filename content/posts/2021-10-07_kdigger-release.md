@@ -1,7 +1,6 @@
 ---
 title: "kdigger: a Context Discovery Tool for Kubernetes"
 date: "2021-10-07"
-description: ""
 tags: ["Go", "kubernetes", "security"]
 categories: ["kubernetes"]
 url: "posts/kdigger-release"

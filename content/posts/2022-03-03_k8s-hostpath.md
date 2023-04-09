@@ -1,7 +1,6 @@
 ---
 title: "Kubernetes and HostPath, a Love-Hate Relationship"
 date: "2022-03-03"
-description: ""
 tags: ["kubernetes", "security", "cve"]
 categories: ["kubernetes"]
 url: "posts/k8s-hostpath"
