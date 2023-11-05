@@ -27,12 +27,12 @@ languages:
                 # - name: Search
                 #   url: search/
                 #   weight: 10
-                - name: Tags
-                  url: tags/
-                  weight: 10
                 - name: Categories
                   url: categories/
                   weight: 10
+                - name: Tags
+                  url: tags/
+                  weight: 15
 
     # fr:
     #     languageName: ":fr:"
@@ -83,7 +83,6 @@ params:
     env: production # to enable google analytics, opengraph, twitter-cards and schema.
     description: "mtardy blog"
     author: ["Mahé Tardy"]
-    # author: ["Me", "You"] # multiple authors
 
     defaultTheme: auto
     # disableThemeToggle: true
