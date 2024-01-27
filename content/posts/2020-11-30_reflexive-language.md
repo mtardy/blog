@@ -6,7 +6,7 @@ C."
 date: "2020-11-30"
 tags: ["C", "reflexivity"]
 categories: ["programming-language"]
-url: "posts/reflexive-language"
+slug: "reflexive-language"
 ShowToc: true
 ---
 

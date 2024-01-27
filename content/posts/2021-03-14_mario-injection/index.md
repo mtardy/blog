@@ -7,7 +7,7 @@ date: "2021-03-14"
 tags: ["injection", "security", "console"]
 categories: ["game"]
 ShowToc: true
-url: "posts/mario-injection"
+slug: "mario-injection"
 cover:
     image: "figures/smb3.jpg"
     alt: "Super Mario Bros 3"

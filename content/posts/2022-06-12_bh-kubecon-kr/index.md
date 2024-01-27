@@ -5,7 +5,8 @@ description: "Having joined the IT world in covid times, these events were my
 first in-person international conferences!"
 tags: ["open-source", "kubernetes", "security", "linux"]
 categories: ["conferences"]
-url: "post/blackhat-kubecon-kernelrecipes"
+slug: "blackhat-kubecon-kernelrecipes"
+aliases: ["/post/blackhat-kubecon-kernelrecipes"] # keep typo link
 cover:
     image: bhasia.jpg
     relative: true

@@ -3,7 +3,7 @@ title: "Kubernetes and HostPath, a Love-Hate Relationship"
 date: "2022-03-03"
 tags: ["kubernetes", "security", "cve"]
 categories: ["kubernetes"]
-url: "posts/k8s-hostpath"
+slug: "k8s-hostpath"
 canonicalURL: "https://blog.quarkslab.com/kubernetes-and-hostpath-a-love-hate-relationship.html"
 ShowCanonicalLink: true
 ---

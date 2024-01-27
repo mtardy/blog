@@ -3,7 +3,7 @@ title: "Crashing Microsoft OMI with fuzzing"
 date: "2023-03-31"
 tags: ["Microsoft", "security", "fuzzing"]
 categories: ["fuzzing"]
-url: "posts/omi-fuzzing"
+slug: "omi-fuzzing"
 canonicalURL: "https://blog.quarkslab.com/a-gentle-introduction-to-microsoft-omi-and-how-to-crash-it.html"
 ShowCanonicalLink: true
 ---

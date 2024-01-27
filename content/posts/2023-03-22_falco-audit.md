@@ -3,7 +3,7 @@ title: "Introducing Falco audit results"
 date: "2023-03-22"
 tags: ["Falco", "security", "fuzzing", "audit"]
 categories: ["fuzzing"]
-url: "posts/falco-audit"
+slug: "falco-audit"
 canonicalURL: "https://blog.quarkslab.com/audit-of-falco-the-open-source-cloud-native-runtime-security.html"
 ShowCanonicalLink: true
 ---
