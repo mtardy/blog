@@ -12,7 +12,7 @@ tocopen: true
 
 **tl;dr**: please [jump directly to the conclusion]({{< ref "#conclusion" >}})
 if you think you already have some knowledge about memory and just want the
-recap.
+recap. The conclusion links back to the other sections for more details.
 
 ## Disclaimer
 
@@ -941,7 +941,7 @@ cgroups statistics.
 
 This value can technically come out of [cAdvisor](https://github.com/google/cadvisor),
 embedded in the Kubelet or the container runtime. However, at the moment, it
-comes mostly out of cAdvisor anyway because of a [Kubelet
+mostly comes out of cAdvisor anyway because of a [Kubelet
 bug](https://github.com/kubernetes/kubernetes/issues/107172). While the
 computation of this high-level metric is done by cAdvisor or the container
 runtime, if you are using [runc](https://github.com/opencontainers/runc)
