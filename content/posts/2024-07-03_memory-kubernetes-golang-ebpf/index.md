@@ -465,6 +465,32 @@ Looking at RSS to measure memory consumption can be insufficient. Indeed, the
 Linux mechanisms to measure and restrict memory consumption (cgroups) use
 different accounting.
 
+#### Automatically with cmemstat
+
+I created a small utility called [`cmemstat`](https://github.com/mtardy/cmemstat)
+to perform the manual steps explained in the next section automatically.
+
+With a working Go install you can fetch, compile and install with:
+```shell
+go install github.com/mtardy/cmemstat@latest
+```
+
+And then use it with:
+```shell
+cmemstat [option]... program [programoption]...
+```
+
+For example:
+```shell
+cmemstat sleep 3
+# or with options
+cmemstat --debug --refresh 400ms sleep 3
+```
+
+See more information on the project's repository at [github.com/mtardy/cmemstat](https://github.com/mtardy/cmemstat).
+
+#### Manually using the cgroup sys fs
+
 Note that the process must start in the memory cgroup otherwise the accounting
 is incorrect because all the memory usage will be accounted for in the previous
 cgroup. From the [administration guide of the Linux kernel](https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v2.html#memory-ownership):
