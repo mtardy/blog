@@ -144,23 +144,100 @@ methods for Golang and eBPF programs.
 
 ### Reading a Linux process memory use
 
+#### Fast but inaccurate: status
+
 First, you can read the RSS stat of the process, as detailed in the `proc(5)`
-manpage, the read is fast but inaccurate. You can find the same information in
-a parsable form at `/proc/pid/stat`, or measured in pages at `/proc/pid/statm`.
-Let's read the "human" form at `/proc/pid/status`:
+manpage, the read is fast but inaccurate. You can find the same information in:
+- a parsable form at `/proc/pid/stat`;
+- a human form at `/proc/pid/status`;
+- measured in pages at `/proc/pid/statm`.
+
+Let's take a look at the human form:
+
 ```shell
 grep -i rss /proc/$(pidof <process>)/status
 ```
 
+The output should be similar to:
+
+```
+VmRSS:     70244 kB
+RssAnon:           30180 kB
+RssFile:           40064 kB
+RssShmem:              0 kB
+```
+
+As of the [kernel `/proc` documentation](https://www.kernel.org/doc/Documentation/filesystems/proc.txt):
+
+- **VmRSS**: size of memory portions. It contains the three following parts
+  (`VmRSS = RssAnon + RssFile + RssShmem`).
+- **RssAnon**: size of resident anonymous memory.
+- **RssFile**: size of resident file mappings.
+- **RssShmem**: size of resident shmem memory (includes SysV shm, mapping of tmpfs
+  and shared anonymous mappings).
+
+#### Slow but accurate: smaps
+
 For slower but more accurate results, one can use `/proc/pid/smaps_rollup` as
-per the `proc(5)` manpage.
+per the `proc(5)` manpage to retrieve a better total of RSS memory use.
 ```shell
 sudo grep -i rss /proc/$(pidof <process>)/smaps_rollup
 ```
 
-To get the details of RSS consumption by memory segment, you can use:
+The output should be similar to:
+
+```
+Rss:               70648 kB
+```
+
+To get more details of RSS consumption by memory segment, you can use:
 ```shell
 sudo grep -e '^[^A-Z]' -e Rss /proc/$(pidof <process>)/smaps | less
+```
+
+The output should be similar to
+```
+00010000-01c29000 r-xp 00000000 fd:01 31577                /home/[...]/tetragon
+Rss:               18340 kB
+01c30000-03cfe000 r--p 01c20000 fd:01 31577                /home/[...]/tetragon
+Rss:               20664 kB
+03d00000-03e22000 rw-p 03cf0000 fd:01 31577                /home/[...]/tetragon
+Rss:                1160 kB
+03e22000-03e76000 rw-p 00000000 00:00 0
+Rss:                 164 kB
+4000000000-400c800000 rw-p 00000000 00:00 0
+Rss:               22892 kB
+400c800000-4010000000 ---p 00000000 00:00 0
+Rss:                   0 kB
+ff56b9c47000-ff56b9c58000 rw-s 00000000 00:0f 1064         anon_inode:[perf_event]
+Rss:                  68 kB
+ff56b9c58000-ff56b9c69000 rw-s 00000000 00:0f 1064         anon_inode:[perf_event]
+Rss:                  68 kB
+ff56b9c69000-ff56b9c7a000 rw-s 00000000 00:0f 1064         anon_inode:[perf_event]
+Rss:                  68 kB
+ff56b9c7a000-ff56b9c8b000 rw-s 00000000 00:0f 1064         anon_inode:[perf_event]
+Rss:                  68 kB
+ff56b9c8b000-ff56b9c9c000 rw-s 00000000 00:0f 1064         anon_inode:[perf_event]
+Rss:                  68 kB
+ff56b9c9c000-ff56b9cad000 rw-s 00000000 00:0f 1064         anon_inode:[perf_event]
+Rss:                  68 kB
+ff56b9cad000-ff56ba400000 rw-p 00000000 00:00 0
+Rss:                6280 kB
+ff56ba400000-ff56bc400000 rw-p 00000000 00:00 0
+Rss:                   4 kB
+[...]
+ff5700d96000-ff5700da8000 rw-p 00000000 00:00 0
+Rss:                  72 kB
+ff5700da8000-ff5700ea7000 ---p 00000000 00:00 0
+Rss:                   0 kB
+ff5700ea7000-ff5700f07000 rw-p 00000000 00:00 0
+Rss:                  56 kB
+ff5700f07000-ff5700f09000 r--p 00000000 00:00 0            [vvar]
+Rss:                   0 kB
+ff5700f09000-ff5700f0a000 r-xp 00000000 00:00 0            [vdso]
+Rss:                   4 kB
+ffffe3ebf000-ffffe3ee0000 rw-p 00000000 00:00 0            [stack]
+Rss:                  16 kB
 ```
 
 Or better, you can use `pmap(1)` to get nicely formatted version of
@@ -169,161 +246,67 @@ Or better, you can use `pmap(1)` to get nicely formatted version of
 sudo pmap $(pidof <process>) -xp
 ```
 
-If looking at the segment, especially the anonymous ones isn't helpful, you
-can try to trace the memory operation of the process to see what's happening.
+The output should be similar to
+
+```
+597662:   ./tetragon --bpf-lib bpf/objs/ --tracing-policy-dir /home/mtardy.linux/tetragon/examples/tracingpolicy/set
+Address           Kbytes     RSS   Dirty Mode  Mapping
+0000000000010000   28772   18340       0 r-x-- /home/mtardy.linux/tetragon/tetragon
+0000000001c30000   33592   20664       0 r---- /home/mtardy.linux/tetragon/tetragon
+0000000003d00000    1160    1160     228 rw--- /home/mtardy.linux/tetragon/tetragon
+0000000003e22000     336     164     164 rw---   [ anon ]
+0000004000000000  204800   22892   22892 rw---   [ anon ]
+000000400c800000   57344       0       0 -----   [ anon ]
+0000ff56b9c47000      68      68       4 rw-s-   [ anon ]
+0000ff56b9c58000      68      68       4 rw-s-   [ anon ]
+0000ff56b9c69000      68      68       4 rw-s-   [ anon ]
+0000ff56b9c7a000      68      68       4 rw-s-   [ anon ]
+0000ff56b9c8b000      68      68       4 rw-s-   [ anon ]
+0000ff56b9c9c000      68      68       4 rw-s-   [ anon ]
+0000ff56b9cad000    7500    6280    6280 rw---   [ anon ]
+0000ff56ba400000   32768       4       4 rw---   [ anon ]
+0000ff56bc400000     512       0       0 -----   [ anon ]
+0000ff56bc480000       4       4       4 rw---   [ anon ]
+0000ff56bc481000  524284       0       0 -----   [ anon ]
+0000ff56dc480000       4       4       4 rw---   [ anon ]
+0000ff56dc481000  523836       0       0 -----   [ anon ]
+0000ff56fc410000       4       4       4 rw---   [ anon ]
+0000ff56fc411000   65476       0       0 -----   [ anon ]
+0000ff5700402000       4       4       4 rw---   [ anon ]
+0000ff5700403000    8180       0       0 -----   [ anon ]
+0000ff5700c06000     576     564     564 rw---   [ anon ]
+0000ff5700c96000    1024       8       8 rw---   [ anon ]
+0000ff5700d96000      72      72      72 rw---   [ anon ]
+0000ff5700da8000    1020       0       0 -----   [ anon ]
+0000ff5700ea7000     384      56      56 rw---   [ anon ]
+0000ff5700f07000       8       0       0 r----   [ anon ]
+0000ff5700f09000       4       4       0 r-x--   [ anon ]
+0000ffffe3ebf000     132      16      16 rw---   [ stack ]
+---------------- ------- ------- -------
+total kB         1492204   70648   30324
+```
+
+Note that sometimes you can see the PSS column instead of the RSS column, the
+PSS is the "proportional set size", taking into account shared memory. For
+example, if a process has 1000 pages all to itself, and 1000 shared with one
+other process, its PSS will be 1500. See more about that in [ELC: How much
+memory are applications really using?](https://lwn.net/Articles/230975/).
+
+If looking at the segment, especially the anonymous ones isn't helpful, you can
+try to trace the memory operation of the process to see what's happening and
+when they are allocated.
 
 ```shell
 strace -e trace=memory -o out.trace <cmd>
 ```
 
-If you are looking at a runtime allocating memory, it can be rather confusing
-and you better check the runtime tools to analyze anonymous memory consumption
-directly.
+But looking at a runtime allocating memory can be rather confusing and you
+better check a runtime tools to analyze anonymous memory consumption directly.
 
-### Golang memory use and the garbage collector
+### Golang memory use
 
-*This section is a cut-out from [Golang Documentation: A Guide to the Go
-Garbage Collector](https://tip.golang.org/doc/gc-guide), this might be
-outdated, it was written as of v1.22.*
-
-Here are some important resources:
-- [Go: The Garbage collector guide](https://tip.golang.org/doc/gc-guide);
-- [Go: The Optimization guide](https://tip.golang.org/doc/gc-guide#Optimization_guide);
-- [Go: Diagnostics](https://go.dev/doc/diagnostics#profiling);
-- [Garbage Collection (Mark & Sweep) by Computerphile](https://www.youtube.com/watch?v=c32zXYAK7CI);
-  a “Mark & Sweep” algorithm walks the roots of a program to find objects (and
-  follow their objects and pointers) to mark them as live. Then it recycles the
-  memory used for all the unreachable objects.
-- [Smarter scavenging proposal](https://github.com/golang/proposal/blob/master/design/30333-smarter-scavenging.md),
-  issue [#30333](https://github.com/golang/go/issues/30333); process can be
-  OOMed because RSS use is too high, improving scavenging improves how the GO
-  GC gives back memories to the OS.
-
-#### Garbage collection
-
-> [...] In the context of this document, garbage collection refers
-> to tracing garbage collection, which identifies in-use, so-called live,
-> objects by following pointers transitively.
->
-> Together, objects and pointers to other objects form the object graph. To
-> identify live memory, the GC walks the object graph starting at the
-> program's roots, pointers that identify objects that are definitely in-use by
-> the program. Two examples of roots are local variables and global variables.
-> The process of walking the object graph is referred to as scanning.
->
-> [...] Go's GC uses the mark-sweep technique, which means that in order to
-> keep track of its progress, the GC also marks the values it encounters as
-> live. Once tracing is complete, the GC then walks over all memory in the heap
-> and makes all memory that is not marked available for allocation. This
-> process is called sweeping.
-
-#### The GOGC parameter
-
-GOGC determines the trade-off between GC CPU and memory
-
-> It works by determining the target heap size after each GC cycle, a target
-> value for the total heap size in the next cycle. The GC's goal is to finish a
-> collection cycle before the total heap size exceeds the target heap size.
-> Total heap size is defined as the live heap size at the end of the previous
-> cycle, plus any new heap memory allocated by the application since the
-> previous cycle. Meanwhile, target heap memory is defined as:
->
-> *Target heap memory = Live heap + (Live heap + GC roots) \* GOGC / 100*
-
-#### The Go Memory Limit
-
-For workload runnings in constrained environments (typically containers), Go
-1.19 introduced `GOMEMLIMIT`, in order to take advantage of a high `GOGC` while
-not getting OOMed during transient memory spikes.
-
-See the following situation with `GOGC` = 100:
-
-{{<
-    figure
-    align=center
-    src="./gogc.png"
-    caption="Memory trace with `GOGC` = 100"
-    height=200px
-    class=keep-aspect-ratio
->}}
-
-￼
-Now with `GOGC` = 100 and `GOMEMLIMIT` = 35 MB:
-￼
-{{<
-    figure
-    align=center
-    src="./gogc_gomemlimit.png"
-    caption="Memory trace with `GOGC` = 100 and `GOMEMLIMIT` = 35 MB"
-    height=200px
-    class=keep-aspect-ratio
->}}
-
-> Now, while the memory limit is clearly a powerful tool, the use of a memory
-> limit does not come without a cost, and certainly doesn't invalidate the
-> utility of GOGC.
->
-> [...] This situation, where the program fails to make reasonable progress due
-> to constant GC cycles, is called thrashing. It's particularly dangerous
-> because it effectively stalls the program. Even worse, it can happen for
-> exactly the same situation we were trying to avoid with GOGC: a large enough
-> transient heap spike can cause a program to stall indefinitely!
->
-> [...] In many cases, an indefinite stall is worse than an out-of-memory
-> condition, which tends to result in a much faster failure.
->
-> For this reason, the memory limit is defined to be soft. The Go runtime makes
-> no guarantees that it will maintain this memory limit under all
-> circumstances; it only promises some reasonable amount of effort.
-
-The guide thus recommends using memory limit when executing in an environment
-under control or restricted, like containers.
-> [...] A good example is the deployment of a web service into containers with
-> a fixed amount of available memory. In this case, a good rule of thumb is to
-> leave an additional 5-10% of headroom to account for memory sources the Go
-> runtime is unaware of.
-
-#### Go runtime and virtual memory
-
-> Because virtual memory is just a mapping maintained by the operating system,
-> it is typically very cheap to make large virtual memory reservations that
-> don't map to physical memory.
->
-> The Go runtime generally relies upon this view of the cost of virtual memory
-> in a few ways:
-> * The Go runtime never deletes virtual memory that it maps. Instead, it uses
->   special operations that most operating systems provide to explicitly
->   release any physical memory resources associated with some virtual memory
->   range. This technique is used explicitly to manage the memory limit and
->   return memory to the operating system that the Go runtime no longer needs.
->   The Go runtime also releases memory it no longer needs continuously in the
->   background. See the additional resources for more information.
-> * On 32-bit platforms, the Go runtime reserves between 128 MiB and 512 MiB of
->   address space up-front for the heap to limit fragmentation issues.
-> * The Go runtime uses large virtual memory address space reservations in the
->   implementation of several internal data structures. On 64-bit platforms,
->   these typically have a minimum virtual memory footprint of about 700 MiB.
->   On 32-bit platforms, their footprint is negligible.
-> **As a result, virtual memory metrics such as "VSS" in top are typically not
-> very useful in understanding a Go program's memory footprint. Instead, focus
-> on "RSS" and similar measurements, which more directly reflect physical
-> memory usage.**
-
-#### Understand and reduce Go heap use
-
-The best way to reduce memory consumption is to actually diagnose what
-consumes the most memory and change or optimize the program using profiling.
-
-See two Golang official documentation resources, the [Optimization
-guide](https://tip.golang.org/doc/gc-guide#Optimization_guide) and
-[Diagnostics](https://go.dev/doc/diagnostics#profiling). Using the Go embedded
-profiler [pprof](https://pkg.go.dev/net/http/pprof) is crucial, Julia Evans
-propose a good article on [Profiling Go programs with
-pprof](https://jvns.ca/blog/2017/09/24/profiling-go-with-pprof/).
-
-Running [gops](https://github.com/google/gops) can also help to retrieve the
-runtime memory values at runtime, you can find Go [memstat
-documentation](https://go.dev/src/runtime/mstats.go) in the runtime sources.
+This section was growing too much so I decided to make it a separate article
+that you can find here: [A Deep Dive into Golang Memory](/posts/memory-golang).
 
 ### eBPF programs' memory impact
 
