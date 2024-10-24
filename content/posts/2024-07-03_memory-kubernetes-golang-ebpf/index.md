@@ -112,6 +112,8 @@ by Brendan Gregg.*
     src="./page_fault_example.png"
     link="https://www.brendangregg.com/systems-performance-2nd-edition-book.html"
     caption="Figure 7.2: Page fault example"
+    height=400px
+    class=keep-aspect-ratio
 >}}
 
 The result of the virtual memory model and demand allocation is that any page
@@ -241,6 +243,8 @@ See the following situation with `GOGC` = 100:
     align=center
     src="./gogc.png"
     caption="Memory trace with `GOGC` = 100"
+    height=200px
+    class=keep-aspect-ratio
 >}}
 
 ￼
@@ -251,6 +255,8 @@ Now with `GOGC` = 100 and `GOMEMLIMIT` = 35 MB:
     align=center
     src="./gogc_gomemlimit.png"
     caption="Memory trace with `GOGC` = 100 and `GOMEMLIMIT` = 35 MB"
+    height=200px
+    class=keep-aspect-ratio
 >}}
 
 > Now, while the memory limit is clearly a powerful tool, the use of a memory
@@ -379,6 +385,8 @@ to render an interactive pie chart out of bpftool's output.
     align=center
     src="./bpfmemapie.png"
     caption="An example of pie chart with Cilium Tetragon running"
+    height=400px
+    class=keep-aspect-ratio
 >}}
 
 
@@ -647,6 +655,8 @@ between this stat and the stats, we retrieve from the OS and explain it.
     src="./kubernetes_metrics_diagram.drawio.png"
     link="https://mihai-albert.com/wp-content/uploads/2022/02/kubernetes_metrics_diagram.drawio.png"
     caption="Metrics components diagram (Kubernetes 1.21 cluster with containerd, as of Feb 2022) by Mihai Albert"
+    height=350px
+    class=keep-aspect-ratio
 >}}
 
 The above diagram is from the author of the original blog post and gives a good

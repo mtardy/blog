@@ -1,0 +1,7 @@
+.goat {
+    font-size: 14px;
+}
+
+.keep-aspect-ratio img {
+    object-fit: contain; 
+}
