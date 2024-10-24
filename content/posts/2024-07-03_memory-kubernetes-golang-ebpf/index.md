@@ -144,23 +144,100 @@ methods for Golang and eBPF programs.
 
 ### Reading a Linux process memory use
 
+#### Fast but inaccurate: status
+
 First, you can read the RSS stat of the process, as detailed in the `proc(5)`
-manpage, the read is fast but inaccurate. You can find the same information in
-a parsable form at `/proc/pid/stat`, or measured in pages at `/proc/pid/statm`.
-Let's read the "human" form at `/proc/pid/status`:
+manpage, the read is fast but inaccurate. You can find the same information in:
+- a parsable form at `/proc/pid/stat`;
+- a human form at `/proc/pid/status`;
+- measured in pages at `/proc/pid/statm`.
+
+Let's take a look at the human form:
+
 ```shell
 grep -i rss /proc/$(pidof <process>)/status
 ```
 
+The output should be similar to:
+
+```
+VmRSS:     70244 kB
+RssAnon:           30180 kB
+RssFile:           40064 kB
+RssShmem:              0 kB
+```
+
+As of the [kernel `/proc` documentation](https://www.kernel.org/doc/Documentation/filesystems/proc.txt):
+
+- **VmRSS**: size of memory portions. It contains the three following parts
+  (`VmRSS = RssAnon + RssFile + RssShmem`).
+- **RssAnon**: size of resident anonymous memory.
+- **RssFile**: size of resident file mappings.
+- **RssShmem**: size of resident shmem memory (includes SysV shm, mapping of tmpfs
+  and shared anonymous mappings).
+
+#### Slow but accurate: smaps
+
 For slower but more accurate results, one can use `/proc/pid/smaps_rollup` as
-per the `proc(5)` manpage.
+per the `proc(5)` manpage to retrieve a better total of RSS memory use.
 ```shell
 sudo grep -i rss /proc/$(pidof <process>)/smaps_rollup
 ```
 
-To get the details of RSS consumption by memory segment, you can use:
+The output should be similar to:
+
+```
+Rss:               70648 kB
+```
+
+To get more details of RSS consumption by memory segment, you can use:
 ```shell
 sudo grep -e '^[^A-Z]' -e Rss /proc/$(pidof <process>)/smaps | less
+```
+
+The output should be similar to
+```
+00010000-01c29000 r-xp 00000000 fd:01 31577                /home/[...]/tetragon
+Rss:               18340 kB
+01c30000-03cfe000 r--p 01c20000 fd:01 31577                /home/[...]/tetragon
+Rss:               20664 kB
+03d00000-03e22000 rw-p 03cf0000 fd:01 31577                /home/[...]/tetragon
+Rss:                1160 kB
+03e22000-03e76000 rw-p 00000000 00:00 0
+Rss:                 164 kB
+4000000000-400c800000 rw-p 00000000 00:00 0
+Rss:               22892 kB
+400c800000-4010000000 ---p 00000000 00:00 0
+Rss:                   0 kB
+ff56b9c47000-ff56b9c58000 rw-s 00000000 00:0f 1064         anon_inode:[perf_event]
+Rss:                  68 kB
+ff56b9c58000-ff56b9c69000 rw-s 00000000 00:0f 1064         anon_inode:[perf_event]
+Rss:                  68 kB
+ff56b9c69000-ff56b9c7a000 rw-s 00000000 00:0f 1064         anon_inode:[perf_event]
+Rss:                  68 kB
+ff56b9c7a000-ff56b9c8b000 rw-s 00000000 00:0f 1064         anon_inode:[perf_event]
+Rss:                  68 kB
+ff56b9c8b000-ff56b9c9c000 rw-s 00000000 00:0f 1064         anon_inode:[perf_event]
+Rss:                  68 kB
+ff56b9c9c000-ff56b9cad000 rw-s 00000000 00:0f 1064         anon_inode:[perf_event]
+Rss:                  68 kB
+ff56b9cad000-ff56ba400000 rw-p 00000000 00:00 0
+Rss:                6280 kB
+ff56ba400000-ff56bc400000 rw-p 00000000 00:00 0
+Rss:                   4 kB
+[...]
+ff5700d96000-ff5700da8000 rw-p 00000000 00:00 0
+Rss:                  72 kB
+ff5700da8000-ff5700ea7000 ---p 00000000 00:00 0
+Rss:                   0 kB
+ff5700ea7000-ff5700f07000 rw-p 00000000 00:00 0
+Rss:                  56 kB
+ff5700f07000-ff5700f09000 r--p 00000000 00:00 0            [vvar]
+Rss:                   0 kB
+ff5700f09000-ff5700f0a000 r-xp 00000000 00:00 0            [vdso]
+Rss:                   4 kB
+ffffe3ebf000-ffffe3ee0000 rw-p 00000000 00:00 0            [stack]
+Rss:                  16 kB
 ```
 
 Or better, you can use `pmap(1)` to get nicely formatted version of
@@ -169,35 +246,77 @@ Or better, you can use `pmap(1)` to get nicely formatted version of
 sudo pmap $(pidof <process>) -xp
 ```
 
-If looking at the segment, especially the anonymous ones isn't helpful, you
-can try to trace the memory operation of the process to see what's happening.
+The output should be similar to
+
+```
+597662:   ./tetragon --bpf-lib bpf/objs/ --tracing-policy-dir /home/mtardy.linux/tetragon/examples/tracingpolicy/set
+Address           Kbytes     RSS   Dirty Mode  Mapping
+0000000000010000   28772   18340       0 r-x-- /home/mtardy.linux/tetragon/tetragon
+0000000001c30000   33592   20664       0 r---- /home/mtardy.linux/tetragon/tetragon
+0000000003d00000    1160    1160     228 rw--- /home/mtardy.linux/tetragon/tetragon
+0000000003e22000     336     164     164 rw---   [ anon ]
+0000004000000000  204800   22892   22892 rw---   [ anon ]
+000000400c800000   57344       0       0 -----   [ anon ]
+0000ff56b9c47000      68      68       4 rw-s-   [ anon ]
+0000ff56b9c58000      68      68       4 rw-s-   [ anon ]
+0000ff56b9c69000      68      68       4 rw-s-   [ anon ]
+0000ff56b9c7a000      68      68       4 rw-s-   [ anon ]
+0000ff56b9c8b000      68      68       4 rw-s-   [ anon ]
+0000ff56b9c9c000      68      68       4 rw-s-   [ anon ]
+0000ff56b9cad000    7500    6280    6280 rw---   [ anon ]
+0000ff56ba400000   32768       4       4 rw---   [ anon ]
+0000ff56bc400000     512       0       0 -----   [ anon ]
+0000ff56bc480000       4       4       4 rw---   [ anon ]
+0000ff56bc481000  524284       0       0 -----   [ anon ]
+0000ff56dc480000       4       4       4 rw---   [ anon ]
+0000ff56dc481000  523836       0       0 -----   [ anon ]
+0000ff56fc410000       4       4       4 rw---   [ anon ]
+0000ff56fc411000   65476       0       0 -----   [ anon ]
+0000ff5700402000       4       4       4 rw---   [ anon ]
+0000ff5700403000    8180       0       0 -----   [ anon ]
+0000ff5700c06000     576     564     564 rw---   [ anon ]
+0000ff5700c96000    1024       8       8 rw---   [ anon ]
+0000ff5700d96000      72      72      72 rw---   [ anon ]
+0000ff5700da8000    1020       0       0 -----   [ anon ]
+0000ff5700ea7000     384      56      56 rw---   [ anon ]
+0000ff5700f07000       8       0       0 r----   [ anon ]
+0000ff5700f09000       4       4       0 r-x--   [ anon ]
+0000ffffe3ebf000     132      16      16 rw---   [ stack ]
+---------------- ------- ------- -------
+total kB         1492204   70648   30324
+```
+
+Note that sometimes you can see the PSS column instead of the RSS column, the
+PSS is the "proportional set size", taking into account shared memory. For
+example, if a process has 1000 pages all to itself, and 1000 shared with one
+other process, its PSS will be 1500. See more about that in [ELC: How much
+memory are applications really using?](https://lwn.net/Articles/230975/).
+
+If looking at the segment, especially the anonymous ones isn't helpful, you can
+try to trace the memory operation of the process to see what's happening and
+when they are allocated.
 
 ```shell
 strace -e trace=memory -o out.trace <cmd>
 ```
 
-If you are looking at a runtime allocating memory, it can be rather confusing
-and you better check the runtime tools to analyze anonymous memory consumption
-directly.
+But looking at a runtime allocating memory can be rather confusing and you
+better check a runtime tools to analyze anonymous memory consumption directly.
 
-### Golang memory use and the garbage collector
+### Golang memory use
 
-*This section is a cut-out from [Golang Documentation: A Guide to the Go
-Garbage Collector](https://tip.golang.org/doc/gc-guide), this might be
-outdated, it was written as of v1.22.*
+For this article we'll focus on an application written with Golang. For the
+memory management, Golang uses garbage collection which means that allocating
+and freeing memory is mostly transparent to the user. While it makes the
+manipulation of memory easy at first glance, troubleshooting memory issues
+requires you to understand how the garbage collector works.
 
-Here are some important resources:
-- [Go: The Garbage collector guide](https://tip.golang.org/doc/gc-guide);
-- [Go: The Optimization guide](https://tip.golang.org/doc/gc-guide#Optimization_guide);
-- [Go: Diagnostics](https://go.dev/doc/diagnostics#profiling);
-- [Garbage Collection (Mark & Sweep) by Computerphile](https://www.youtube.com/watch?v=c32zXYAK7CI);
-  a “Mark & Sweep” algorithm walks the roots of a program to find objects (and
-  follow their objects and pointers) to mark them as live. Then it recycles the
-  memory used for all the unreachable objects.
-- [Smarter scavenging proposal](https://github.com/golang/proposal/blob/master/design/30333-smarter-scavenging.md),
-  issue [#30333](https://github.com/golang/go/issues/30333); process can be
-  OOMed because RSS use is too high, improving scavenging improves how the GO
-  GC gives back memories to the OS.
+*The quote part of this section are cut-outs from [Golang Documentation: A
+Guide to the Go Garbage Collector](https://tip.golang.org/doc/gc-guide). Note
+that it might be outdated, the article was written as of v1.22. Here are some
+other important resources:
+[Go: The Optimization guide](https://tip.golang.org/doc/gc-guide#Optimization_guide)
+and [Go: Diagnostics](https://go.dev/doc/diagnostics#profiling).*
 
 #### Garbage collection
 
@@ -217,9 +336,29 @@ Here are some important resources:
 > and makes all memory that is not marked available for allocation. This
 > process is called sweeping.
 
+See this video for details about the Mark & Sweep technic: [Garbage Collection
+(Mark & Sweep) by Computerphile](https://www.youtube.com/watch?v=c32zXYAK7CI);
+a “Mark & Sweep” algorithm walks the roots of a program to find objects (and
+follow their objects and pointers) to mark them as live. Then it recycles the
+memory used for all the unreachable objects.
+
 #### The GOGC parameter
 
-GOGC determines the trade-off between GC CPU and memory
+The GOGC parameter determines the trade-off between GC CPU use and memory. To
+put it simply, the more CPU cycles you use for garbage collecting, the closest
+you can stick to the live heap (the memory you actually need), but the less you
+actually spend time on executing the actual program. So by default, GOGC is
+equal to 100 which means that the process may use 100% more memory that needed
+to run. It can lead to frustrating situation where you consume around 50MB of
+heap but the actual impact of the Go heap is around 100MB or a bit more. See
+[this thread](https://groups.google.com/g/golang-nuts/c/SNRW-f1F9aM/m/BZiO0AgGAgAJ)
+from someone confused about why `memstats.HeapInUse` is twice the total in
+pprof.
+
+> The key takeaway is that doubling GOGC will double heap memory overheads and
+> roughly halve GC CPU cost, and vice versa.
+
+Here are some details on how GOGC is defined:
 
 > It works by determining the target heap size after each GC cycle, a target
 > value for the total heap size in the next cycle. The GC's goal is to finish a
@@ -230,13 +369,10 @@ GOGC determines the trade-off between GC CPU and memory
 >
 > *Target heap memory = Live heap + (Live heap + GC roots) \* GOGC / 100*
 
-#### The Go Memory Limit
-
-For workload runnings in constrained environments (typically containers), Go
-1.19 introduced `GOMEMLIMIT`, in order to take advantage of a high `GOGC` while
-not getting OOMed during transient memory spikes.
-
-See the following situation with `GOGC` = 100:
+See the following situation with `GOGC` = 100, you can see that most of the
+time after startup, this program used around 20MiB of memory but the impact of
+its heap was at maximum around 40MiB, and the slight spike at 30MiB made the
+process needing 60MiB.
 
 {{<
     figure
@@ -247,8 +383,22 @@ See the following situation with `GOGC` = 100:
     class=keep-aspect-ratio
 >}}
 
-￼
-Now with `GOGC` = 100 and `GOMEMLIMIT` = 35 MB:
+A problem arise from the above situation, what if I need to run my program in a
+memory constraint environment and I don't want the OOM killer to immediately
+reap my process because of a sudden spike that concerns only a small portion of
+its execution. You actually need to know your program well to actually bump
+into that specific issue, a good first step would be to just reduce the overall
+memory consumption before trying to tackle transient memory spikes. However one
+can note that this situation often occurs at application startup when
+initializing subsystems.
+
+#### The Go Memory Limit
+
+For workload runnings in constrained environments (typically containers), Go
+1.19 introduced `GOMEMLIMIT`, in order to take advantage of a high `GOGC` while
+not getting OOMed during transient memory spikes.
+
+Now with `GOGC` = 100 (like the previous figure) and `GOMEMLIMIT` = 35 MB:
 ￼
 {{<
     figure
@@ -283,6 +433,12 @@ under control or restricted, like containers.
 > leave an additional 5-10% of headroom to account for memory sources the Go
 > runtime is unaware of.
 
+So while the `GOMEMLIMIT` can be useful when fine tunning an application
+running under known load, we'll know focus on understanding the link between
+what we have seen in RSS use before and the Go memory statistics. We'll also
+see how to profile memory allocation to find the location in your program that
+are guilty of consuming too much memory.
+
 #### Go runtime and virtual memory
 
 > Because virtual memory is just a mapping maintained by the operating system,
@@ -298,16 +454,140 @@ under control or restricted, like containers.
 >   return memory to the operating system that the Go runtime no longer needs.
 >   The Go runtime also releases memory it no longer needs continuously in the
 >   background. See the additional resources for more information.
-> * On 32-bit platforms, the Go runtime reserves between 128 MiB and 512 MiB of
->   address space up-front for the heap to limit fragmentation issues.
-> * The Go runtime uses large virtual memory address space reservations in the
->   implementation of several internal data structures. On 64-bit platforms,
->   these typically have a minimum virtual memory footprint of about 700 MiB.
->   On 32-bit platforms, their footprint is negligible.
-> **As a result, virtual memory metrics such as "VSS" in top are typically not
+>
+> [...]
+>
+> As a result, virtual memory metrics such as "VSS" in top are typically not
 > very useful in understanding a Go program's memory footprint. Instead, focus
 > on "RSS" and similar measurements, which more directly reflect physical
-> memory usage.**
+> memory usage.
+
+See more about that in the [Smarter scavenging proposal](https://github.com/golang/proposal/blob/master/design/30333-smarter-scavenging.md),
+issue [#30333](https://github.com/golang/go/issues/30333); process can be OOMed
+because RSS use is too high, improving scavenging improves how the GO GC gives
+back memories to the OS.
+
+Again here, similarly as what we saw with the GOGC parameter, there's a
+tradeoff between returning the free memory to the OS to reduce the amount of
+memory the process use and the performance cost of doing so.
+
+> * Returning all free memory back to the underlying system at once is expensive,
+> and can lead to latency spikes as it holds the heap lock through the whole
+> process.
+> * [...]
+> * Reusing free chunks of memory becomes more expensive. On UNIX-y systems that
+> means an extra page fault (which is surprisingly expensive on some systems).
+
+In any case, this part is mostly out of control for the end user and is
+maintained and improved by the people working on the Go runtime.
+
+#### Memory advise DONTNEED and FREE
+
+The [Go v1.12 release notes](https://go.dev/doc/go1.12#runtime) brings
+something new, while on one hand the Go runtime now releases memory back to the
+OS more aggressively, it also now uses `MADV_FREE` on Linux which basically
+means that the OS will not actually free the memory if it's not under pressure.
+It was implemented by [CL 135395](https://go-review.googlesource.com/c/go/+/135395)
+(I just noticed it was by my colleague Tobias ahah):
+> The Go runtime now releases memory back to the operating system more
+> aggressively, particularly in response to large allocations that can’t reuse
+> existing heap space.
+>
+> [...]
+>
+> On Linux, the runtime now uses MADV_FREE to release unused memory. This is
+> more efficient but may result in higher reported RSS. The kernel will reclaim
+> the unused data when it is needed. To revert to the Go 1.11 behavior
+> (MADV_DONTNEED), set the environment variable GODEBUG=madvdontneed=1.
+
+See more about `MADV_DONTNEED` and `MADV_FREE` in the man page `madvise(2)`:
+```
+MADV_DONTNEED
+        Do not expect access in the near future.  (For the time
+        being, the application is finished with the given range,
+        so the kernel can free resources associated with it.)
+
+        After a successful MADV_DONTNEED operation, the semantics
+        of memory access in the specified region are changed:
+        subsequent accesses of pages in the range will succeed,
+        but will result in either repopulating the memory contents
+        from the up-to-date contents of the underlying mapped file
+        (for shared file mappings, shared anonymous mappings, and
+        shmem-based techniques such as System V shared memory
+        segments) or zero-fill-on-demand pages for anonymous
+        private mappings.
+
+        Note that, when applied to shared mappings, MADV_DONTNEED
+        might not lead to immediate freeing of the pages in the
+        range.  The kernel is free to delay freeing the pages
+        until an appropriate moment.  The resident set size (RSS)
+        of the calling process will be immediately reduced
+        however.
+
+[...]
+
+MADV_FREE (since Linux 4.5)
+        The application no longer requires the pages in the range
+        specified by addr and len.  The kernel can thus free these
+        pages, but the freeing could be delayed until memory
+        pressure occurs.  For each of the pages that has been
+        marked to be freed but has not yet been freed, the free
+        operation will be canceled if the caller writes into the
+        page.  After a successful MADV_FREE operation, any stale
+        data (i.e., dirty, unwritten pages) will be lost when the
+        kernel frees the pages.  However, subsequent writes to
+        pages in the range will succeed and then kernel cannot
+        free those dirtied pages, so that the caller can always
+        see just written data.  If there is no subsequent write,
+        the kernel can free the pages at any time.  Once pages in
+        the range have been freed, the caller will see zero-fill-
+        on-demand pages upon subsequent page references.
+
+        The MADV_FREE operation can be applied only to private
+        anonymous pages (see mmap(2)).  Before Linux 4.12, when
+        freeing pages on a swapless system, the pages in the given
+        range are freed instantly, regardless of memory pressure.
+```
+
+Only for this change being revert in Go 1.16, by [CL 267100](https://go-review.googlesource.com/c/go/+/267100):
+> In Go 1.12, we changed the runtime to use MADV_FREE when available on Linux
+> (falling back to MADV_DONTNEED) in CL 135395 to address issue #23687. While
+> MADV_FREE is somewhat faster than MADV_DONTNEED, it doesn't affect many of
+> the statistics that MADV_DONTNEED does until the memory is actually reclaimed
+> under OS memory pressure. This generally leads to poor user experience, like
+> confusing stats in top and other monitoring tools; and bad integration with
+> management systems that respond to memory usage.
+>
+> We've seen numerous issues about this user experience, including #41818,
+> #39295, #37585, #33376, and #30904, many questions on Go mailing lists, and
+> requests for mechanisms to change this behavior at run-time, such as #40870.
+> There are also issues that may be a result of this, but root-causing it can
+> be difficult, such as #41444 and #39174. And there's some evidence it may
+> even be incompatible with Android's process management in #37569.
+>
+> This CL changes the default to prefer MADV_DONTNEED over MADV_FREE, to favor
+> user-friendliness and minimal surprise over performance. I think it's become
+> clear that Linux's implementation of MADV_FREE ultimately doesn't meet our
+> needs. We've also made many improvements to the scavenger since Go 1.12. In
+> particular, it is now far more prompt and it is self-paced, so it will simply
+> trickle memory back to the system a little more slowly with this change. This
+> can still be overridden by setting GODEBUG=madvdontneed=0.
+
+Appearing in the [v1.16 changelog](https://go.dev/doc/go1.16#runtime)
+> On Linux, the runtime now defaults to releasing memory to the operating
+> system promptly (using MADV_DONTNEED), rather than lazily when the operating
+> system is under memory pressure (using MADV_FREE). This means process-level
+> memory statistics like RSS will more accurately reflect the amount of
+> physical memory being used by Go processes. Systems that are currently using
+> GODEBUG=madvdontneed=1 to improve memory monitoring behavior no longer need
+> to set this environment variable.
+
+Here is [an excellent StackOverflow answer](https://stackoverflow.com/a/73633428/4561420)
+that tries to put together many things we've seen here.
+
+
+
+
 
 #### Understand and reduce Go heap use
 
