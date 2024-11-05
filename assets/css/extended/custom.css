@@ -5,3 +5,7 @@
 .keep-aspect-ratio img {
     object-fit: contain; 
 }
+
+body {
+    font-size: 16px;
+}
