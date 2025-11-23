@@ -178,13 +178,9 @@ markup:
     goldmark:
         renderer:
             unsafe: true
-    # highlight:
-#         anchorLineNos: true
-#         codeFences: true
-#         guessSyntax: false
-#         lineNos: true
-#         noClasses: false
-#         style: monokai
+    highlight:
+        anchorLineNos: true
+        noClasses: false
 
 privacy:
     vimeo:
