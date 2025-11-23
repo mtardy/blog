@@ -84,7 +84,7 @@ enough to answer my bottle to the sea on Twitter (notice the Singap**our**
 :fr:), he was [also presenting at
 Arsenal](https://www.blackhat.com/asia-22/arsenal/schedule/index.html#pwnppeteer---phishing-post-exploiautomation-at-scale-26191):
 
-{{< tweet user="mtardy_" id="1522148399633555456" >}}
+{{< x user="mtardy_" id="1522148399633555456" >}}
 
 ### Presentations
 
@@ -119,7 +119,7 @@ to verify devices' integrity.
 A technical talk on finding vulnerabilities in TLS libraries that literally
 ended in burning a UPS on stage:
 
-{{< tweet user="mtardy_" id="1524954308005056512" >}}
+{{< x user="mtardy_" id="1524954308005056512" >}}
 
 [Link to the schedule](https://www.blackhat.com/asia-22/briefings/schedule/index.html#like-lightning-from-the-cloud-finding-rces-in-an-embedded-tls-library-and-toasting-a-popular-cloud-connected-ups-25927)
 

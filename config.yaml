@@ -127,8 +127,6 @@ params:
     socialIcons:
         - name: github
           url: "https://github.com/mtardy"
-        - name: twitter
-          url: "https://twitter.com/mtardy_"
         - name: mastodon
           url: "https://infosec.exchange/@mtardy"
         - name: linkedin
@@ -189,7 +187,7 @@ privacy:
         disabled: false
         simple: true
 
-    twitter:
+    x:
         disabled: false
         enableDNT: true
         simple: true
@@ -205,5 +203,5 @@ privacy:
 services:
     instagram:
         disableInlineCSS: true
-    twitter:
+    x:
         disableInlineCSS: true
