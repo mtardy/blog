@@ -1,0 +1,114 @@
+baseURL = "https://mtardy.com"
+title = "mtardy"
+theme = "PaperMod"
+enableInlineShortcodes = true
+enableRobotsTXT = true
+buildDrafts = false
+buildFuture = false
+buildExpired = false
+enableEmoji = true
+
+[pagination]
+pagerSize = 100
+
+[minify]
+disableXML = true
+minifyOutput = true
+
+[languages.en]
+languageName = "English"
+weight = 1
+
+[[languages.en.menu.main]]
+name = "Archive"
+url = "archives"
+weight = 1
+
+[[languages.en.menu.main]]
+name = "Categories"
+url = "categories/"
+weight = 2
+
+[[languages.en.menu.main]]
+name = "Tags"
+url = "tags/"
+weight = 3
+
+[outputs]
+home = [ "HTML", "RSS", "JSON" ]
+
+[params]
+env = "production"
+description = "mtardy blog"
+author = [ "Mahé Tardy" ]
+defaultTheme = "auto"
+ShowReadingTime = false
+displayFullLangName = true
+ShowPostNavLinks = true
+ShowBreadCrumbs = true
+ShowCodeCopyButtons = true
+ShowToc = true
+
+  [params.homeInfoParams]
+  Title = "Hi!"
+  Content ="""
+I'm Mahé, a Software Engineer working at Isovalent, now acquired by Cisco
+:bridge_at_night:.
+\\
+\\
+I was previously a Security R&D Engineer at Quarkslab and before that, I
+started at Flowdesk, a fintech startup. I hope you'll find some interesting
+content here, some articles are links to my published work, and others are more
+or less finished notes on technical topics.
+"""
+
+  [[params.socialIcons]]
+  name = "github"
+  url = "https://github.com/mtardy"
+
+  [[params.socialIcons]]
+  name = "mastodon"
+  url = "https://infosec.exchange/@mtardy"
+
+  [[params.socialIcons]]
+  name = "linkedin"
+  url = "https://linkedin.com/in/mtardy"
+
+  [[params.socialIcons]]
+  name = "RsS"
+  url = "index.xml"
+
+  [params.cover]
+  hiddenInList = true
+
+[taxonomies]
+category = "categories"
+tag = "tags"
+
+[markup.goldmark.renderer]
+unsafe = true
+
+[markup.highlight]
+anchorLineNos = true
+noClasses = false
+
+[privacy.vimeo]
+enableDNT = true
+simple = true
+
+[privacy.x]
+enableDNT = true
+simple = true
+
+[privacy.instagram]
+simple = true
+
+[privacy.youtube]
+privacyEnhanced = true
+
+[services.instagram]
+disableInlineCSS = true
+
+[services.x]
+disableInlineCSS = true
+
