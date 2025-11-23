@@ -1,7 +1,9 @@
 baseURL: "https://mtardy.com"
 title: mtardy
-paginate: 100
 theme: PaperMod
+
+pagination:
+    pagerSize: 100
 
 enableInlineShortcodes: true
 enableRobotsTXT: true
