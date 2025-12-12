@@ -18,6 +18,10 @@ beginning of my final year internship. We were in pairs and had to choose our
 subject. We chose to work on code injection in video game via the game commands
 themselves.*
 
+*The full report, unfortunately only available in French (but could be machine
+translated) and written with a very playful, student-like tone, can be
+[downloaded here](rapport.pdf).*
+
 ## Abstract
 
 During this project, we tried to answer the question: \"can you inject code and
