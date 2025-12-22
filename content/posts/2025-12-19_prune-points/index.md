@@ -1,5 +1,5 @@
 ---
-title: "Making Sense of Prune Points"
+title: "BPF Verifier State Pruning: Prune Points"
 date: "2025-12-19"
 categories: ["ebpf"]
 tags: ["ebpf", "linux", "C"]
